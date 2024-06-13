@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "83760572374",
+    "project_id": "capstone-birdwatch",
+    "storage_bucket": "capstone-birdwatch.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:83760572374:android:271cf57b3d9368f84c6677",
+        "android_client_info": {
+          "package_name": "com.capstonebangkit.birdwatch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "83760572374-eh803m4jjidgos2itdnds3j165a36dfo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.capstonebangkit.birdwatch",
+            "certificate_hash": "27b3e80c27045e5fb4cdcf56b04f26c67e40848f"
+          }
+        },
+        {
+          "client_id": "83760572374-k11br1i1so0pl2qim4bkb1kr4rcfs2cp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIs4FhcC3rGkHgYXWkJL5faVQYuluGtnI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "83760572374-k11br1i1so0pl2qim4bkb1kr4rcfs2cp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
