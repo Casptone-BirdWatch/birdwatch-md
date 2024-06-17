@@ -36,11 +36,6 @@ class AccountFragment : Fragment() {
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        accountViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-
         binding.btnlogout.setOnClickListener {
             signOut()
         }
@@ -48,7 +43,6 @@ class AccountFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         val firebaseUser = auth.currentUser
         if (firebaseUser == null) {
-            // Not signed in, launch the Login activity
             startActivity(Intent(requireContext(), LoginActivity::class.java))
             activity?.finish()
             return root
