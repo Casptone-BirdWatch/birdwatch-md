@@ -18,6 +18,9 @@
         android:theme="@style/Theme.BirdWatch"
         tools:targetApi="31">
         <activity
+            android:name=".view.detail.DetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.ui.detail.DetailActivity"
             android:exported="false" />
         <activity
@@ -35,7 +38,7 @@
         <activity
             android:name=".view.main.MainActivity"
             android:exported="false"
-            android:label="@string/app_name"></activity> <!-- Trigger Google Play services to install the backported photo picker module. -->
+            android:label="@string/app_name" /> <!-- Trigger Google Play services to install the backported photo picker module. -->
         <!-- suppress AndroidDomInspection -->
         <service
             android:name="com.google.android.gms.metadata.ModuleDependencies"

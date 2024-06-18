@@ -1,5 +1,6 @@
 package com.capstonebangkit.birdwatch.view.ui.analyze
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import com.capstonebangkit.birdwatch.data.remote.retrofit.ApiConfig
 import com.capstonebangkit.birdwatch.databinding.FragmentAnalyzeBinding
 import com.capstonebangkit.birdwatch.helper.getImageUri
 import com.capstonebangkit.birdwatch.helper.uriToFile
+import com.capstonebangkit.birdwatch.view.detail.DetailActivity
 import com.capstonebangkit.birdwatch.view.ui.detail.BirdDetailFragment
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
@@ -91,6 +93,14 @@ class AnalyzeFragment : Fragment() {
                     if (response.isSuccessful) {
                         val predictResponse = response.body()
                         Log.d("Response", "Genus: ${predictResponse?.genus}, JenisBurung: ${predictResponse?.jenisBurung}")
+
+                        val intent = Intent(requireContext(), DetailActivity::class.java)
+                        intent.putExtra("JENIS_BURUNG_KEY", predictResponse?.jenisBurung)
+                        intent.putExtra("IMAGE_KEY", uri.toString())
+                        intent.putExtra("GENUS_KEY", predictResponse?.genus)
+                        intent.putExtra("FAMILI_KEY", predictResponse?.famili)
+                        intent.putExtra("DESKRIPSI_KEY", predictResponse?.deskripsi)
+                        startActivity(intent)
 
                     } else {
                         Log.e("UploadImage", "Gagal mengunggah gambar: ${response.message()}")
