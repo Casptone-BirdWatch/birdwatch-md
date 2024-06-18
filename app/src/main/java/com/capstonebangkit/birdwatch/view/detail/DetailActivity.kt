@@ -36,15 +36,13 @@ class DetailActivity : AppCompatActivity() {
                 tvBird.text = birdDetail.jenisBurung
                 tvFamili.text = birdDetail.famili
                 tvDescription.text = birdDetail.deskripsi
-                Glide.with(this@DetailActivity)
-                    .load(birdDetail.imageUrl)
-                    .into(ivBird)
+                Glide.with(this@DetailActivity).load(birdDetail.imageUrl).into(ivBird)
             }
         }
     }
 
     private fun setupBookmark() {
-        if (!isBookmark) {
+        if (isBookmark) {
             binding.btnBookmark.setImageResource(R.drawable.ic_bookmark)
             addBookmark()
         } else {
@@ -54,11 +52,12 @@ class DetailActivity : AppCompatActivity() {
 
     private fun addBookmark() {
         val predictResponse: PredictResponse? = intent.getParcelableExtra(EXTRA_DETAIL)
-        predictResponse?.id?.let { query ->
-            detailViewModel.addBookmark(query)
+        predictResponse?.id?.let { predictionId ->
+            detailViewModel.addBookmark(predictionId)
         }
     }
-    companion object{
+
+    companion object {
         const val EXTRA_DETAIL = "extra_detail"
     }
 }
