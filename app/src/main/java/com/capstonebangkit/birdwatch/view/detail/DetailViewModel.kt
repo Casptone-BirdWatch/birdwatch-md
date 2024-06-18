@@ -1,28 +1,50 @@
 package com.capstonebangkit.birdwatch.view.detail
 
-import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.capstonebangkit.birdwatch.data.remote.response.AddBookmarkRequest
+import com.capstonebangkit.birdwatch.data.remote.request.AddBookmarkRequest
 import com.capstonebangkit.birdwatch.data.remote.retrofit.ApiConfig
 import kotlinx.coroutines.launch
 
 class DetailViewModel : ViewModel() {
+
+    private val _toastMessage = MutableLiveData<String>()
+    val toastMessage: LiveData<String>
+        get() = _toastMessage
+
     fun addBookmark(predictionId: String) {
         viewModelScope.launch {
             try {
                 val apiService = ApiConfig.getApiService()
-
                 val request = AddBookmarkRequest(predictionId)
                 val response = apiService.addBookmark(request)
 
                 if (response.isSuccessful) {
-                    Log.d("AddBookmark", "Successfully added bookmark")
+                    _toastMessage.postValue("Bookmark added")
                 } else {
-                    Log.e("AddBookmark", "Failed to add bookmark: ${response.message()}")
+                    _toastMessage.postValue("Failed to add bookmark: ${response.message()}")
                 }
             } catch (e: Exception) {
-                Log.e("AddBookmark", "Exception: ${e.message}")
+                _toastMessage.postValue("Exception: ${e.message}")
+            }
+        }
+    }
+
+    fun deleteBookmark(bookmarkId: String) {
+        viewModelScope.launch {
+            try {
+                val apiService = ApiConfig.getApiService()
+                val response = apiService.deleteBookmark(bookmarkId)
+
+                if (response.isSuccessful) {
+                    _toastMessage.postValue("Bookmark deleted")
+                } else {
+                    _toastMessage.postValue("Failed to delete bookmark: ${response.message()}")
+                }
+            } catch (e: Exception) {
+                _toastMessage.postValue("Exception: ${e.message}")
             }
         }
     }

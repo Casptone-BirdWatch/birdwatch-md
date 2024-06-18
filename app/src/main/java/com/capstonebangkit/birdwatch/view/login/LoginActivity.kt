@@ -41,20 +41,16 @@ class LoginActivity : AppCompatActivity() {
         binding.signInButton.setOnClickListener {
             signIn()
         }
-
     }
 
     private fun signIn() {
         val credentialManager = CredentialManager.create(this)
 
-        val googleIdOption = GetGoogleIdOption.Builder()
-            .setFilterByAuthorizedAccounts(false)
-            .setServerClientId(getString(R.string.your_web_client_id))
-            .build()
+        val googleIdOption = GetGoogleIdOption.Builder().setFilterByAuthorizedAccounts(false)
+            .setServerClientId(getString(R.string.your_web_client_id)).build()
 
         val request = GetCredentialRequest.Builder() //import from androidx.CredentialManager
-            .addCredentialOption(googleIdOption)
-            .build()
+            .addCredentialOption(googleIdOption).build()
 
         lifecycleScope.launch {
             try {
@@ -97,8 +93,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential: AuthCredential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
+        auth.signInWithCredential(credential).addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "signInWithCredential:success")
                     val user: FirebaseUser? = auth.currentUser

@@ -1,6 +1,7 @@
 package com.capstonebangkit.birdwatch.view.detail
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -26,6 +27,10 @@ class DetailActivity : AppCompatActivity() {
             isBookmark = !isBookmark
             setupBookmark()
         }
+
+        detailViewModel.toastMessage.observe(this) { message ->
+            showToast(message)
+        }
     }
 
     private fun setupDetail() {
@@ -42,19 +47,22 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setupBookmark() {
+        val predictResponse: PredictResponse? = intent.getParcelableExtra(EXTRA_DETAIL)
         if (isBookmark) {
             binding.btnBookmark.setImageResource(R.drawable.ic_bookmark)
-            addBookmark()
+            predictResponse?.id?.let { predictionId ->
+                detailViewModel.addBookmark(predictionId)
+            }
         } else {
             binding.btnBookmark.setImageResource(R.drawable.ic_bookmark_border)
+            predictResponse?.id?.let { bookmarkId ->
+                detailViewModel.deleteBookmark(bookmarkId)
+            }
         }
     }
 
-    private fun addBookmark() {
-        val predictResponse: PredictResponse? = intent.getParcelableExtra(EXTRA_DETAIL)
-        predictResponse?.id?.let { predictionId ->
-            detailViewModel.addBookmark(predictionId)
-        }
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

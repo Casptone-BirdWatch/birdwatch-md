@@ -1,4 +1,4 @@
-package com.capstonebangkit.birdwatch.data.remote.response
+package com.capstonebangkit.birdwatch.data.remote.request
 
 import com.google.gson.annotations.SerializedName
 
