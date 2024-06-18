@@ -94,12 +94,9 @@ class AnalyzeFragment : Fragment() {
                         val predictResponse = response.body()
                         Log.d("Response", "Genus: ${predictResponse?.genus}, JenisBurung: ${predictResponse?.jenisBurung}")
 
-                        val intent = Intent(requireContext(), DetailActivity::class.java)
-                        intent.putExtra("JENIS_BURUNG_KEY", predictResponse?.jenisBurung)
-                        intent.putExtra("IMAGE_KEY", uri.toString())
-                        intent.putExtra("GENUS_KEY", predictResponse?.genus)
-                        intent.putExtra("FAMILI_KEY", predictResponse?.famili)
-                        intent.putExtra("DESKRIPSI_KEY", predictResponse?.deskripsi)
+                        val intent = Intent(requireContext(), DetailActivity::class.java).apply {
+                            putExtra(DetailActivity.EXTRA_DETAIL, predictResponse)
+                        }
                         startActivity(intent)
 
                     } else {

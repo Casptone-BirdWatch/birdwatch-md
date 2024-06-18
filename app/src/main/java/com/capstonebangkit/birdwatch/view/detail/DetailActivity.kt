@@ -1,10 +1,9 @@
 package com.capstonebangkit.birdwatch.view.detail
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.capstonebangkit.birdwatch.R
+import com.capstonebangkit.birdwatch.data.remote.response.PredictResponse
 import com.capstonebangkit.birdwatch.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
@@ -17,20 +16,24 @@ class DetailActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        val jenisBurung = intent.getStringExtra("JENIS_BURUNG_KEY")
-        val imageUrl = intent.getStringExtra("IMAGE_KEY")
-        val genus = intent.getStringExtra("GENUS_KEY")
-        val famili = intent.getStringExtra("FAMILI_KEY")
-        val deskripsi = intent.getStringExtra("DESKRIPSI_KEY")
+        setupDetail()
+    }
 
-        binding.tvGenus.text = genus
-        binding.tvBird.text = jenisBurung
-        binding.tvFamili.text = famili
-        binding.tvDescription.text = deskripsi
-        Glide.with(this)
-            .load(imageUrl)
-            .placeholder(R.drawable.baseline_image_search_24) // Gambar placeholder
-            .error(R.drawable.baseline_image_search_24) // Gambar error
-            .into(binding.ivBird)
+    private fun setupDetail() {
+        val response: PredictResponse? = intent.getParcelableExtra(EXTRA_DETAIL)
+        response?.let { birdDetail ->
+            binding.apply {
+                tvGenus.text = birdDetail.genus
+                tvBird.text = birdDetail.jenisBurung
+                tvFamili.text = birdDetail.famili
+                tvDescription.text = birdDetail.deskripsi
+                Glide.with(this@DetailActivity)
+                    .load(birdDetail.imageUrl)
+                    .into(ivBird)
+            }
+        }
+    }
+    companion object{
+        const val EXTRA_DETAIL = "extra_detail"
     }
 }
