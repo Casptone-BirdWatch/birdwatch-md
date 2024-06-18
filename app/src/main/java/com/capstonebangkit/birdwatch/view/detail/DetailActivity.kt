@@ -1,13 +1,18 @@
 package com.capstonebangkit.birdwatch.view.detail
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.capstonebangkit.birdwatch.R
 import com.capstonebangkit.birdwatch.data.remote.response.PredictResponse
 import com.capstonebangkit.birdwatch.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
+    private var isBookmark = false
+
+    private val detailViewModel: DetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,8 +20,12 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.hide()
-
         setupDetail()
+
+        binding.btnBookmark.setOnClickListener {
+            isBookmark = !isBookmark
+            setupBookmark()
+        }
     }
 
     private fun setupDetail() {
@@ -31,6 +40,22 @@ class DetailActivity : AppCompatActivity() {
                     .load(birdDetail.imageUrl)
                     .into(ivBird)
             }
+        }
+    }
+
+    private fun setupBookmark() {
+        if (!isBookmark) {
+            binding.btnBookmark.setImageResource(R.drawable.ic_bookmark)
+            addBookmark()
+        } else {
+            binding.btnBookmark.setImageResource(R.drawable.ic_bookmark_border)
+        }
+    }
+
+    private fun addBookmark() {
+        val predictResponse: PredictResponse? = intent.getParcelableExtra(EXTRA_DETAIL)
+        predictResponse?.id?.let { query ->
+            detailViewModel.addBookmark(query)
         }
     }
     companion object{
