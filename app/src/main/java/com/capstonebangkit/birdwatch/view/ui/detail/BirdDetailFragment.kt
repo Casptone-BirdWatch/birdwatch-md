@@ -4,42 +4,44 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.capstonebangkit.birdwatch.R
+import com.capstonebangkit.birdwatch.databinding.FragmentBirdDetailBinding
 
 class BirdDetailFragment : Fragment() {
 
-    companion object {
-        const val ARG_BIRD_NAME = "bird_name"
-        const val ARG_BIRD_DESCRIPTION = "bird_description"
-        const val ARG_BIRD_IMAGE_URL = "bird_image_url"
-    }
+    private var _binding: FragmentBirdDetailBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_bird_detail, container, false)
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentBirdDetailBinding.inflate(inflater, container, false)
+        val root: View = binding.root
 
-        val birdName = view.findViewById<TextView>(R.id.bird_name)
-        val birdDescription = view.findViewById<TextView>(R.id.bird_description)
-        val birdImage = view.findViewById<ImageView>(R.id.bird_image)
+        val args = arguments
+        val genus = args?.getString("genus")
+        val jenisBurung = args?.getString("jenisBurung")
+        val imageUrl = args?.getString("imageUrl")
+        val deskripsi = args?.getString("deskripsi")
+        val famili = args?.getString("famili")
 
-        val name = arguments?.getString(ARG_BIRD_NAME)
-        val description = arguments?.getString(ARG_BIRD_DESCRIPTION)
-        val imageUrl = arguments?.getString(ARG_BIRD_IMAGE_URL)
-
-        birdName.text = name
-        birdDescription.text = description
-
+        binding.tvGenus.text = genus
+        binding.tvBird.text = jenisBurung
+        binding.tvDescription.text = deskripsi
+        binding.tvFamili.text = famili
         Glide.with(this)
             .load(imageUrl)
-            .into(birdImage)
+            .placeholder(R.drawable.baseline_image_search_24) // Gambar placeholder
+            .error(R.drawable.baseline_image_search_24) // Gambar error
+            .into(binding.ivBird)
 
-        return view
+        return root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

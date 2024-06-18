@@ -16,14 +16,12 @@ interface ApiService {
     @Multipart
     @POST("predict")
     suspend fun uploadImage(
-        @Header("Authorization") token: String,
         @Part file: MultipartBody.Part
     ): Response<PredictResponse>
 
     @Multipart
     @POST("addBookmark")
     suspend fun addBookmark(
-        @Header("Authorization") token: String,
         @Part file: MultipartBody.Part
     ): AddBookmarkResponse
 
