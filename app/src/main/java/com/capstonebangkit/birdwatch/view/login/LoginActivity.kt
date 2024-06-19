@@ -126,7 +126,6 @@ class LoginActivity : AppCompatActivity() {
         updateUI(currentUser)
     }
 
-
     companion object {
         private const val TAG = "LoginActivity"
     }

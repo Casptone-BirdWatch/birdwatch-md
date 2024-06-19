@@ -2,6 +2,7 @@ package com.capstonebangkit.birdwatch.data.remote.retrofit
 
 import com.capstonebangkit.birdwatch.data.remote.request.AddBookmarkRequest
 import com.capstonebangkit.birdwatch.data.remote.response.AddBookmarkResponse
+import com.capstonebangkit.birdwatch.data.remote.response.BookmarkResponseItem
 import com.capstonebangkit.birdwatch.data.remote.response.PredictResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -30,6 +31,9 @@ interface ApiService {
     suspend fun deleteBookmark(
         @Path("bookmarkId") bookmarkId: String
     ): Response<Void>
+
+    @GET("bookmarks")
+    suspend fun getBookmarks(): Response<List<BookmarkResponseItem>>
 
     @GET("searchBirds")
     fun searchBirds(@Query("query") query: String): retrofit2.Call<List<PredictResponse>>

@@ -3,11 +3,34 @@ package com.capstonebangkit.birdwatch.view.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.capstonebangkit.birdwatch.data.remote.response.BookmarkResponseItem
+import com.capstonebangkit.birdwatch.data.remote.retrofit.ApiConfig
+import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    private val _bookmarks = MutableLiveData<List<BookmarkResponseItem?>>()
+    val bookmarks: LiveData<List<BookmarkResponseItem?>>
+        get() = _bookmarks
+
+    private val _toastMessage = MutableLiveData<String>()
+    val toastMessage: LiveData<String>
+        get() = _toastMessage
+
+    fun getBookmarks() {
+        viewModelScope.launch {
+            try {
+                val apiService = ApiConfig.getApiService()
+                val response = apiService.getBookmarks()
+                if (response.isSuccessful) {
+                    _bookmarks.postValue(response.body()) // langsung set list dari response
+                } else {
+                    _toastMessage.postValue("Failed to fetch bookmarks: ${response.message()}")
+                }
+            } catch (e: Exception) {
+                _toastMessage.postValue("Exception: ${e.message}")
+            }
+        }
     }
-    val text: LiveData<String> = _text
 }
