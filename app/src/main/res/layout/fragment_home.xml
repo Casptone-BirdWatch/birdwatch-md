@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray"
     tools:context=".view.ui.home.HomeFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:orientation="vertical"
         android:background="@drawable/header_background"
-        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:padding="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:padding="16dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -27,10 +28,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:text="Hello!"
+                android:text="Halo!"
                 android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:textStyle="normal" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/id_name"
@@ -38,10 +39,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/welcome_text"
                 android:layout_alignStart="@id/welcome_text"
-                android:text="Taufiq"
+                android:text="Selamat Datang di BirdWatch"
                 android:textColor="@android:color/white"
-                android:textSize="24sp"
-                android:textStyle="bold"/>
+                android:textSize="18sp"
+                android:textStyle="normal" />
 
             <ImageView
                 android:id="@+id/profile_image"
@@ -49,34 +50,51 @@
                 android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_logo"
-                android:contentDescription="@string/profile_image_desc"/>
+                android:contentDescription="@string/profile_image_desc"
+                android:src="@drawable/ic_logo" />
         </RelativeLayout>
 
-        <EditText
-            android:id="@+id/search"
+        <SearchView
+            android:id="@+id/searchView"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:background="@drawable/search_background"
-            android:drawableStart="@drawable/ic_search"
-            android:hint="Search"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:singleLine="true" />
+            android:iconifiedByDefault="false"
+            android:queryHint="Cari bookmark" />
     </LinearLayout>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bookmark Anda"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/rvBookmarks"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        app:layout_constraintVertical_bias="0.25" /> <!-- Penyesuaian vertical bias di sini -->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvBookmarks"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="16dp"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
         android:paddingBottom="16dp"
-        tools:listitem="@layout/item_bookmark"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline"
+        tools:listitem="@layout/item_bookmark" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

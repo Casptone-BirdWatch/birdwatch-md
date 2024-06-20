@@ -1,23 +1,29 @@
-package com.capstonebangkit.birdwatch
+package com.capstonebangkit.birdwatch.helper
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.capstonebangkit.birdwatch.data.remote.response.BookmarkResponseItem
 import com.capstonebangkit.birdwatch.databinding.ItemBookmarkBinding
+import com.capstonebangkit.birdwatch.view.detail.DetailActivity
+import com.capstonebangkit.birdwatch.view.detailbookmark.DetailBookmarkActivity
 
-class BookmarkAdapter(private val bookmarks: List<BookmarkResponseItem?>) : RecyclerView.Adapter<BookmarkAdapter.BookmarkViewHolder>() {
-
+class BookmarkAdapter(private var bookmarks: List<BookmarkResponseItem?>) : RecyclerView.Adapter<BookmarkAdapter.BookmarkViewHolder>() {
     inner class BookmarkViewHolder(private val binding: ItemBookmarkBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(bookmark: BookmarkResponseItem?) {
             bookmark?.let {
                 binding.apply {
-                    tvGenus.text = bookmark.genus
                     tvBird.text = bookmark.jenisBurung
-                    tvFamili.text = bookmark.famili
                     Glide.with(itemView.context).load(bookmark.imageUrl).into(ivBird)
                 }
+            }
+            itemView.setOnClickListener {
+                val intent = Intent(itemView.context, DetailBookmarkActivity::class.java).apply {
+                    putExtra(DetailBookmarkActivity.EXTRA_BOOKMARK, bookmark)
+                }
+                itemView.context.startActivity(intent)
             }
         }
     }
@@ -32,4 +38,9 @@ class BookmarkAdapter(private val bookmarks: List<BookmarkResponseItem?>) : Recy
     }
 
     override fun getItemCount(): Int = bookmarks.size
+
+    fun updateList(newBookmarks: List<BookmarkResponseItem?>) {
+        bookmarks = newBookmarks
+        notifyDataSetChanged()
+    }
 }

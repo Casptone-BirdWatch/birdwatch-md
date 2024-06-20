@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/teal_background"
-    tools:context=".view.detail.DetailActivity">
+    tools:context=".view.detailbookmark.DetailBookmarkActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_bird"
@@ -37,11 +37,11 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="-20dp"
-        android:background="@color/white"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,22 +118,6 @@
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black" />
             </LinearLayout>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btn_bookmark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="40dp"
-                android:backgroundTint="@color/teal_background"
-                android:clickable="true"
-                android:contentDescription="Bookmark"
-                android:focusable="true"
-                android:tint="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/ic_bookmark_border" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

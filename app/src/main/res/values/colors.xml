@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="teal_background">#719CA3</color>
     <color name="red">#E33629</color>
+    <color name="gray">#EFEFEF</color>
+    <color name="teal_dark">#123745</color>
 </resources>
