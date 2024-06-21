@@ -13,7 +13,6 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface ApiService {
     @Multipart
@@ -34,7 +33,4 @@ interface ApiService {
 
     @GET("bookmarks")
     suspend fun getBookmarks(): Response<List<BookmarkResponseItem>>
-
-    @GET("searchBirds")
-    fun searchBirds(@Query("query") query: String): retrofit2.Call<List<PredictResponse>>
 }

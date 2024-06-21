@@ -24,7 +24,7 @@ class HomeViewModel : ViewModel() {
                 val apiService = ApiConfig.getApiService()
                 val response = apiService.getBookmarks()
                 if (response.isSuccessful) {
-                    _bookmarks.postValue(response.body()) // langsung set list dari response
+                    _bookmarks.postValue(response.body())
                 } else {
                     _toastMessage.postValue("Failed to fetch bookmarks: ${response.message()}")
                 }
@@ -32,5 +32,9 @@ class HomeViewModel : ViewModel() {
                 _toastMessage.postValue("Exception: ${e.message}")
             }
         }
+    }
+
+    fun removeBookmarkById(bookmarkId: String) {
+        _bookmarks.value = _bookmarks.value?.filterNot { it?.id == bookmarkId }
     }
 }

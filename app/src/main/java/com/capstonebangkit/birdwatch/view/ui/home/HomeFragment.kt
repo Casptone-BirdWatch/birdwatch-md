@@ -1,6 +1,9 @@
 package com.capstonebangkit.birdwatch.view.ui.home
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +13,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstonebangkit.birdwatch.helper.BookmarkAdapter
+import com.capstonebangkit.birdwatch.data.remote.response.BookmarkResponseItem
 import com.capstonebangkit.birdwatch.databinding.FragmentHomeBinding
+import com.capstonebangkit.birdwatch.view.detailbookmark.DetailBookmarkActivity
 
 class HomeFragment : Fragment() {
 
@@ -40,7 +45,12 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerView() {
         binding.rvBookmarks.layoutManager = LinearLayoutManager(requireContext())
-        bookmarkAdapter = BookmarkAdapter(emptyList())
+        bookmarkAdapter = BookmarkAdapter(emptyList()) { bookmark ->
+            val intent = Intent(requireContext(), DetailBookmarkActivity::class.java).apply {
+                putExtra(DetailBookmarkActivity.EXTRA_BOOKMARK, bookmark as Parcelable)
+            }
+            startActivityForResult(intent, REQUEST_CODE_DETAIL)
+        }
         binding.rvBookmarks.adapter = bookmarkAdapter
     }
 
@@ -83,5 +93,19 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_DETAIL && resultCode == Activity.RESULT_OK) {
+            val deletedBookmarkId = data?.getStringExtra(DetailBookmarkActivity.EXTRA_BOOKMARK_ID)
+            deletedBookmarkId?.let { id ->
+                homeViewModel.removeBookmarkById(id)
+            }
+        }
+    }
+
+    companion object {
+        const val REQUEST_CODE_DETAIL = 100
     }
 }

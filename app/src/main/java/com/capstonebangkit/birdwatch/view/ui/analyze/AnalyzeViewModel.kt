@@ -17,8 +17,8 @@ class AnalyzeViewModel : ViewModel() {
     val loading: LiveData<Boolean>
         get() = _loading
 
-    private val _predictResponse = MutableLiveData<PredictResponse>()
-    val predictResponse: LiveData<PredictResponse>
+    private val _predictResponse = MutableLiveData<PredictResponse?>()
+    val predictResponse: LiveData<PredictResponse?>
         get() = _predictResponse
 
     fun uploadImage(imageFile: File) {
@@ -46,5 +46,9 @@ class AnalyzeViewModel : ViewModel() {
                 _loading.value = false
             }
         }
+    }
+
+    fun resetPredictResponse() {
+        _predictResponse.value = null
     }
 }

@@ -118,6 +118,19 @@
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black" />
             </LinearLayout>
+
+            <Button
+                android:id="@+id/btnDeleteBookmark"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="40dp"
+                android:backgroundTint="@color/red"
+                android:text="Delete Bookmark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

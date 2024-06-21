@@ -26,40 +26,6 @@ class AnalyzeFragment : Fragment() {
     private val analyzeViewModel: AnalyzeViewModel by viewModels()
     private var currentImageUri: Uri? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-
-        _binding = FragmentAnalyzeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        binding.apply {
-            cameraButton.setOnClickListener { startCamera() }
-            intentButton.setOnClickListener { startGallery() }
-            analyzeButton.setOnClickListener { uploadImage() }
-        }
-        observePrediction()
-        return root
-    }
-
-    private fun observePrediction() {
-        analyzeViewModel.predictResponse.observe(viewLifecycleOwner){predictResponse ->
-            predictResponse?.let {
-                val intent = Intent(requireContext(), DetailActivity::class.java).apply {
-                    putExtra(DetailActivity.EXTRA_DETAIL, predictResponse)
-                }
-                startActivity(intent)
-            }
-        }
-        analyzeViewModel.loading.observe(viewLifecycleOwner) {
-            showLoading(it)
-        }
-    }
-
-    private fun startGallery() {
-        launcherGallery.launch("image/*")
-    }
-
     private val launcherGallery = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -71,11 +37,6 @@ class AnalyzeFragment : Fragment() {
         }
     }
 
-    private fun startCamera() {
-        currentImageUri = getImageUri(requireContext())
-        launcherIntentCamera.launch(currentImageUri)
-    }
-
     private val launcherIntentCamera = registerForActivityResult(
         ActivityResultContracts.TakePicture()
     ) { isSuccess ->
@@ -84,13 +45,52 @@ class AnalyzeFragment : Fragment() {
         }
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentAnalyzeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.apply {
+            cameraButton.setOnClickListener { startCamera() }
+            intentButton.setOnClickListener { startGallery() }
+            analyzeButton.setOnClickListener { uploadImage() }
+        }
+
+        analyzeViewModel.loading.observe(viewLifecycleOwner) { isLoading ->
+            showLoading(isLoading)
+        }
+
+        analyzeViewModel.predictResponse.observe(viewLifecycleOwner) { predictResponse ->
+            predictResponse?.let {
+                val intent = Intent(requireContext(), DetailActivity::class.java).apply {
+                    putExtra(DetailActivity.EXTRA_DETAIL, predictResponse)
+                }
+                startActivity(intent)
+                analyzeViewModel.resetPredictResponse()
+            }
+        }
+    }
+
+    private fun startGallery() {
+        launcherGallery.launch("image/*")
+    }
+
+    private fun startCamera() {
+        currentImageUri = getImageUri(requireContext())
+        launcherIntentCamera.launch(currentImageUri)
+    }
+
     private fun uploadImage() {
         currentImageUri?.let { uri ->
             val imageFile = uriToFile(uri, requireContext())
             analyzeViewModel.uploadImage(imageFile)
         } ?: showToast(getString(R.string.empty_image_warning))
     }
-
 
     private fun showImage() {
         currentImageUri?.let {
