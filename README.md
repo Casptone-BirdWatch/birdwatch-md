@@ -11,7 +11,8 @@ Repository BirdWatch for Mobile Development Team
  - 👨‍💻 Taufiq Jati Junianto
 
 ## 📱 APK
-[Link Download](https://drive.google.com/drive/folders/1bHWr8usVi1NhEQgCWlJOsg38ufvUKFff?usp=drive_link)
+[Download Link](https://drive.google.com/file/d/1KsUIeYPfXDImbUZhm7MShyoXXbtxLBhQ/view?usp=drive_link)
+[Demo Video](https://drive.google.com/file/d/1Ca1rthCNRgjV_4cWMPLWWtW2X5R6guJA/view?usp=drive_link)
 
 ## 💻Tech Stack
 - MVVM (Model-View-ViewModel) Architecture Pattern
