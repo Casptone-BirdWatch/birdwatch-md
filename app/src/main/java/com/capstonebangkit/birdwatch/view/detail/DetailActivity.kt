@@ -12,6 +12,7 @@ import com.capstonebangkit.birdwatch.databinding.ActivityDetailBinding
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     private var isBookmark = false
+    private var isClicked = false
 
     private val detailViewModel: DetailViewModel by viewModels()
 
@@ -24,8 +25,13 @@ class DetailActivity : AppCompatActivity() {
         setupDetail()
 
         binding.btnBookmark.setOnClickListener {
-            isBookmark = !isBookmark
-            setupBookmark()
+            if (!isClicked) {
+                isBookmark = !isBookmark
+                setupBookmark()
+                isClicked = true
+            } else {
+                showToast("Bookmark sudah ditambahkan")
+            }
         }
 
         detailViewModel.toastMessage.observe(this) { message ->
@@ -55,9 +61,6 @@ class DetailActivity : AppCompatActivity() {
             }
         } else {
             binding.btnBookmark.setImageResource(R.drawable.ic_bookmark_border)
-            predictResponse?.id?.let { bookmarkId ->
-                detailViewModel.deleteBookmark(bookmarkId)
-            }
         }
     }
 

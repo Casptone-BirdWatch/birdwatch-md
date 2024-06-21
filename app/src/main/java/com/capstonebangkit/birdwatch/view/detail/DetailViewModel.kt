@@ -22,26 +22,9 @@ class DetailViewModel : ViewModel() {
                 val response = apiService.addBookmark(request)
 
                 if (response.isSuccessful) {
-                    _toastMessage.postValue("Bookmark added")
+                    _toastMessage.postValue("Bookmark berhasil ditambahkan")
                 } else {
                     _toastMessage.postValue("Failed to add bookmark: ${response.message()}")
-                }
-            } catch (e: Exception) {
-                _toastMessage.postValue("Exception: ${e.message}")
-            }
-        }
-    }
-
-    fun deleteBookmark(bookmarkId: String) {
-        viewModelScope.launch {
-            try {
-                val apiService = ApiConfig.getApiService()
-                val response = apiService.deleteBookmark(bookmarkId)
-
-                if (response.isSuccessful) {
-                    _toastMessage.postValue("Bookmark deleted")
-                } else {
-                    _toastMessage.postValue("Failed to delete bookmark: ${response.message()}")
                 }
             } catch (e: Exception) {
                 _toastMessage.postValue("Exception: ${e.message}")
