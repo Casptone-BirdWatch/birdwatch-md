@@ -13,14 +13,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstonebangkit.birdwatch.helper.BookmarkAdapter
-import com.capstonebangkit.birdwatch.data.remote.response.BookmarkResponseItem
 import com.capstonebangkit.birdwatch.databinding.FragmentHomeBinding
 import com.capstonebangkit.birdwatch.view.detailbookmark.DetailBookmarkActivity
+import com.capstonebangkit.birdwatch.view.login.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var auth: FirebaseAuth
 
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var bookmarkAdapter: BookmarkAdapter
@@ -30,6 +32,14 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        auth = FirebaseAuth.getInstance()
+        val firebaseUser = auth.currentUser
+        if (firebaseUser == null) {
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            activity?.finish()
+            return binding.root
+        }
         return binding.root
     }
 

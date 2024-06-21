@@ -55,7 +55,6 @@ class LoginActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val result: GetCredentialResponse = credentialManager.getCredential(
-                    //import from androidx.CredentialManager
                     request = request,
                     context = this@LoginActivity,
                 )
@@ -67,7 +66,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun handleSignIn(result: GetCredentialResponse) {
-        // Handle the successfully returned credential.
         when (val credential = result.credential) {
             is CustomCredential -> {
                 if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
@@ -79,13 +77,11 @@ class LoginActivity : AppCompatActivity() {
                         Log.e(TAG, "Received an invalid google id token response", e)
                     }
                 } else {
-                    // Catch any unrecognized custom credential type here.
                     Log.e(TAG, "Unexpected type of credential")
                 }
             }
 
             else -> {
-                // Catch any unrecognized credential type here.
                 Log.e(TAG, "Unexpected type of credential")
             }
         }
